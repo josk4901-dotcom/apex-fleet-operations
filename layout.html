@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CyberGuard Dashboard Layout</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #08111f;
+            color: #e5eef8;
+        }
+
+        /* Dashboard Layout */
+        .dashboard {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Aside should be fixed to avoid scrolling with main content */
+        aside {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 240px;
+            height: 100vh;
+            overflow-y: auto;
+            padding: 25px 18px;
+            background: #0d1b2e;
+            border-right: 1px solid #263b53;
+        }
+
+        .logo {
+            color: #00dfb0;
+            font-size: 25px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            color: #8da5bf;
+            font-size: 12px;
+            margin-bottom: 35px;
+        }
+
+        aside h3 {
+            color: #607c98;
+            font-size: 11px;
+            letter-spacing: 1.5px;
+            margin: 20px 10px 12px;
+        }
+
+        aside nav a {
+            display: block;
+            color: #b5c7db;
+            text-decoration: none;
+            padding: 13px 12px;
+            margin-bottom: 7px;
+            border-radius: 7px;
+            font-size: 14px;
+        }
+
+        aside nav a:hover,
+        aside nav a.active {
+            background: #103b43;
+            color: #00e5b5;
+        }
+
+        /* Main content takes greater space */
+        main {
+            flex: 1;
+            min-width: 0;
+            margin-left: 240px;
+            padding: 25px;
+        }
+
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .topbar h1 {
+            font-size: 25px;
+        }
+
+        .topbar p {
+            color: #8da5bf;
+            font-size: 13px;
+            margin-top: 7px;
+        }
+
+        .status {
+            color: #00dfb0;
+            background: #10382f;
+            border: 1px solid #1d604f;
+            border-radius: 20px;
+            padding: 9px 13px;
+            font-size: 12px;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 15px;
+            margin-bottom: 22px;
+        }
+
+        .card {
+            padding: 20px;
+            background: #102238;
+            border: 1px solid #253e58;
+            border-radius: 10px;
+        }
+
+        .card p {
+            color: #91a8c1;
+            font-size: 12px;
+        }
+
+        .card h2 {
+            color: #00dfb0;
+            margin-top: 12px;
+            font-size: 27px;
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: minmax(0, 1.5fr) minmax(250px, 1fr);
+            gap: 20px;
+        }
+
+        .panel {
+            background: #102238;
+            border: 1px solid #253e58;
+            border-radius: 10px;
+            padding: 22px;
+            margin-bottom: 20px;
+            min-width: 0;
+        }
+
+        .panel h2 {
+            font-size: 17px;
+            margin-bottom: 18px;
+        }
+
+        .map {
+            height: 220px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: #00dfb0;
+            line-height: 2;
+            background:
+                radial-gradient(ellipse at 30% 40%, #12536b, transparent 40%),
+                radial-gradient(ellipse at 70% 60%, #10473f, transparent 35%),
+                #081827;
+            border: 1px solid #25475e;
+            border-radius: 8px;
+        }
+
+        .event {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            padding: 15px 0;
+            border-bottom: 1px solid #293f55;
+            font-size: 12px;
+        }
+
+        .event:last-child {
+            border-bottom: none;
+        }
+
+        .high {
+            color: #ff647b;
+        }
+
+        .medium {
+            color: #ffbd61;
+        }
+
+        .safe {
+            color: #00dfb0;
+        }
+
+        .device {
+            padding: 13px 0;
+            color: #b8cadd;
+            border-bottom: 1px solid #293f55;
+            font-size: 13px;
+        }
+
+        .device:last-child {
+            border-bottom: none;
+        }
+
+        footer {
+            color: #7892ad;
+            font-size: 12px;
+            text-align: center;
+            padding: 20px 0 5px;
+        }
+
+        @media (max-width: 1000px) {
+            .stats {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 600px) {
+            aside {
+                width: 180px;
+                padding: 20px 10px;
+            }
+
+            main {
+                margin-left: 180px;
+                padding: 15px;
+            }
+
+            .stats {
+                grid-template-columns: 1fr;
+            }
+
+            .topbar h1 {
+                font-size: 20px;
+            }
+
+            .card {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Dashboard Layout -->
+    <!-- divide into two (flex) -->
+    <div class="dashboard">
+
+        <!-- Aside & main content -->
+        <!-- aside should be fixed to avoid scrolling with main content -->
+        <aside>
+            <div class="logo">CyberGuard</div>
+            <p class="subtitle">Threat Intelligence Platform</p>
+
+            <h3>MAIN MENU</h3>
+
+            <nav>
+                <a href="#" class="active">Dashboard</a>
+                <a href="#threats">Threat Detection</a>
+                <a href="#network">Network Monitor</a>
+                <a href="#devices">Connected Devices</a>
+                <a href="#reports">Security Reports</a>
+                <a href="#settings">Settings</a>
+            </nav>
+        </aside>
+
+        <!-- Main content flex-1 to take greater space -->
+        <main>
+            <div class="topbar">
+                <div>
+                    <h1>Security Dashboard</h1>
+                    <p>Monitor threats and protect your digital environment.</p>
+                </div>
+
+                <span class="status">SYSTEM ONLINE</span>
+            </div>
+
+            <section class="stats">
+                <div class="card">
+                    <p>Threats Detected</p>
+                    <h2>12</h2>
+                </div>
+
+                <div class="card">
+                    <p>Secured Connections</p>
+                    <h2>248</h2>
+                </div>
+
+                <div class="card">
+                    <p>Connected Devices</p>
+                    <h2>36</h2>
+                </div>
+
+                <div class="card">
+                    <p>Network Uptime</p>
+                    <h2>99.8%</h2>
+                </div>
+            </section>
+
+            <div class="content-grid">
+                <section>
+                    <div class="panel" id="network">
+                        <h2>Global Threat Monitor</h2>
+                        <div class="map">
+                            <div>
+                                GLOBAL NETWORK<br>
+                                Monitoring simulated threats
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="panel" id="devices">
+                        <h2>Connected Devices</h2>
+                        <div class="device">Laptop-01 — <span class="safe">Online</span></div>
+                        <div class="device">Desktop-02 — <span class="safe">Online</span></div>
+                        <div class="device">Server-01 — <span class="safe">Protected</span></div>
+                        <div class="device">Router-01 — <span class="safe">Online</span></div>
+                    </div>
+                </section>
+
+                <section>
+                    <div class="panel" id="threats">
+                        <h2>Recent Security Threats</h2>
+
+                        <div class="event">
+                            <span>Suspicious Login</span>
+                            <strong class="high">HIGH</strong>
+                        </div>
+
+                        <div class="event">
+                            <span>Malware Detection</span>
+                            <strong class="high">HIGH</strong>
+                        </div>
+
+                        <div class="event">
+                            <span>Port Scan</span>
+                            <strong class="medium">MEDIUM</strong>
+                        </div>
+
+                        <div class="event">
+                            <span>Blocked Connection</span>
+                            <strong class="safe">BLOCKED</strong>
+                        </div>
+                    </div>
+
+                    <div class="panel" id="reports">
+                        <h2>Security Summary</h2>
+                        <div class="event">
+                            <span>Threats blocked</span>
+                            <strong class="safe">8</strong>
+                        </div>
+                        <div class="event">
+                            <span>Pending review</span>
+                            <strong class="medium">4</strong>
+                        </div>
+                    </div>
+
+                    <div class="panel" id="settings">
+                        <h2>Security Status</h2>
+                        <p style="color:#91a8c1; line-height:1.8; font-size:13px;">
+                            This demonstration displays sample cybersecurity
+                            information. It does not monitor a real network.
+                        </p>
+                    </div>
+                </section>
+            </div>
+
+            <footer>
+                CyberGuard | Threat Intelligence Platform
+            </footer>
+        </main>
+
+    </div>
+
+</body>
+</html>
