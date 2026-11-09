@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1,
+    "name": "Captain Jonathan Archer",
+    "rank": "Captain",
+    "isOnDuty": true
+  },
+  {
+    "id": 2,
+    "name": "Sub-Commander T'Pol",
+    "rank": "Science Officer",
+    "isOnDuty": true
+  },
+  {
+    "id": 3,
+    "name": "Commander Charles Tucker III",
+    "rank": "Chief Engineer",
+    "isOnDuty": false
+  }
+]

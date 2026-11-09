@@ -1,0 +1,35 @@
+{
+  "agents": [
+    {
+      "id": "001",
+      "codename": "Viper",
+      "status": "Active",
+      "location": "Berlin"
+    },
+    {
+      "id": "002",
+      "codename": "Ghost",
+      "status": "M.I.A.",
+      "location": "Unknown"
+    },
+    {
+      "id": "003",
+      "codename": "Phantom",
+      "status": "Active",
+      "location": "Tokyo"
+    },
+    {
+      "codename": "sam",
+      "location": "town",
+      "status": "active",
+      "id": "FbUdENNSiU8"
+    },
+    {
+      "codename": "small",
+      "location": "kisumu",
+      "status": "active",
+      "id": "n5BNz8ifkBI"
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
+}
