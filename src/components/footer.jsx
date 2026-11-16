@@ -1,10 +1,22 @@
 function Footer() {
   return (
     <footer className="footer">
-      <h2>NAIROBI LABEL</h2>
-      <p>Style that speaks for itself.</p>
+      <div className="footer-content">
+        <h2 className="footer-logo">soko yetu.</h2>
 
-      <p>2026 NAIROBI LABEL. All rights reserved.</p>
+        <p className="footer-tagline">
+          Many sellers. More to discover.
+        </p>
+      </div>
+
+      <div className="footer-bottom">
+        <div className="footer-links">
+          <a href="/terms">Terms & Support</a>
+          <a href="/privacy">Privacy Policy</a>
+        </div>
+
+        <p>Designed with Canva</p>
+      </div>
     </footer>
   );
 }

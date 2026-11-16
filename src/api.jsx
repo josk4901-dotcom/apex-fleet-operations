@@ -1,29 +1,27 @@
-const BASE_URL = 'http://localhost:5000';
+const API_URL = "http://localhost:4000/devices";
 
-export const getAgents = async () => {
-    try {
-        const response = await fetch(`${BASE_URL}/agents`);
+export const fetchDevices = async () => {
+  const response = await fetch(API_URL);
 
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
+  if (!response.ok) {
+    throw new Error("Failed to fetch devices");
+  }
 
-        const data = await response.json();
-        return data;
-
-    } catch (error) {
-        console.error("Failed to fetch agents:", error);
-        return [];
-    }
+  return response.json();
 };
-export const addAgent = async (newAgent) => {
-    
-        const response = await fetch(`${BASE_URL}/agents`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(newAgent),
-        });
-        return await response.json();
-    }
+
+export const updateDevice = async (id, updatedData) => {
+  const response = await fetch(`${API_URL}/${id}`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(updatedData)
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to update device");
+  }
+
+  return response.json();
+};

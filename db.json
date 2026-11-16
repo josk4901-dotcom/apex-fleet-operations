@@ -1,34 +1,34 @@
 {
-  "agents": [
+  "devices": [
     {
-      "id": "001",
-      "codename": "Viper",
-      "status": "Active",
-      "location": "Berlin"
+      "id": "1",
+      "name": "Front Door Lock",
+      "type": "Security",
+      "status": "Locked"
     },
     {
-      "id": "002",
-      "codename": "Ghost",
-      "status": "M.I.A.",
-      "location": "Unknown"
+      "id": "2",
+      "name": "Living Room Thermostat",
+      "type": "Climate",
+      "status": "72°F"
     },
     {
-      "id": "003",
-      "codename": "Phantom",
-      "status": "Active",
-      "location": "Tokyo"
+      "id": "3",
+      "name": "Garage Lights",
+      "type": "Lighting",
+      "status": "On"
     },
     {
-      "codename": "sam",
-      "location": "town",
-      "status": "active",
-      "id": "FbUdENNSiU8"
+      "id": "4",
+      "name": "Bedroom Lights",
+      "type": "Lighting",
+      "status": "On"
     },
     {
-      "codename": "small",
-      "location": "kisumu",
-      "status": "active",
-      "id": "n5BNz8ifkBI"
+      "id": "5",
+      "name": "Security Camera",
+      "type": "Security",
+      "status": "On"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"

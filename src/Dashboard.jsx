@@ -1,59 +1,91 @@
-import { useState, useEffect } from 'react';
-import { getAgents, addAgent } from './api';
+import { useState, useEffect } from "react";
+import { fetchDevices, updateDevice } from "./api";
 
-export default function Dashboard() {
-    const [agentList, setAgentList] = useState([]);
-    const [codename, setCodename] = useState('');
-    const [location, setLocation] = useState('');
-    const [isLoading, setIsLoading] = useState(true);
+function Dashboard() {
+  const [devices, setDevices] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
-    useEffect(() => {
-        const loadData = async () => {
-            setIsLoading(true);
-
-            const data = await getAgents();
-
-            setAgentList(data);
-            setIsLoading(false);
-        };
-
-        loadData();
-    }, []);
-
-    if (isLoading) {
-        return <h2>Decrypting Intel...</h2>;
-    }
-    const handleDeploy=async (e) => {
-        e.preventDefault();
-        const newAgent = { codename, location, status: 'active' };
-
-        try {
-            const deployedAgent = await addAgent(newAgent);
-            setAgentList(prevList => [...prevList, deployedAgent]);
-
-           
-        } catch (error) {
-            console.error("Failed to add agent:", error);
-        }
+  useEffect(() => {
+    const loadDevices = async () => {
+      try {
+        const data = await fetchDevices();
+        setDevices(data);
+      } catch (error) {
+        setError("Failed to load devices");
+      } finally {
+        setLoading(false);
+      }
     };
 
-    return (
-        <div>
-            <h1>Active Operatives</h1>
+    loadDevices();
+  }, []);
 
-            <ul>
-                {agentList.map(agent => (
-                    <li key={agent.id}>
-                        <strong>{agent.codename}</strong> - {agent.location}
-                        ({agent.status})
-                    </li>
-                ))}
-            </ul>
-            <form onSubmit={handleDeploy}>
-                <input type="text" placeholder="Codename" value={codename} onChange={(e) => setCodename(e.target.value)} required />
-                <input type="text" placeholder="Location" value={location} onChange={(e) => setLocation(e.target.value)} required />
-                <button type="submit">Add Agent</button>
-            </form>
-        </div>
-    );
+  const toggleDevice = async (device) => {
+    let newStatus;
+
+    if (device.status === "On") {
+      newStatus = "Off";
+    } else if (device.status === "Off") {
+      newStatus = "On";
+    } else if (device.status === "Locked") {
+      newStatus = "Unlocked";
+    } else if (device.status === "Unlocked") {
+      newStatus = "Locked";
+    } else {
+      return;
+    }
+
+    try {
+      setError("");
+
+      const updatedDevice = await updateDevice(
+        device.id,
+        { status: newStatus }
+      );
+
+      setDevices((previousDevices) =>
+        previousDevices.map((item) =>
+          item.id === device.id ? updatedDevice : item
+        )
+      );
+    } catch (error) {
+      setError("Failed to update device");
+    }
+  };
+
+  if (loading) return <p>Loading devices...</p>;
+
+  return (
+    <div className="dashboard">
+      <h1>Nexus IoT Dashboard</h1>
+      <p>Smart Home Control Panel</p>
+
+      {error && <p>{error}</p>}
+
+      <div className="device-grid">
+        {devices.map((device) => (
+          <div className="device-card" key={device.id}>
+            <h2>{device.name}</h2>
+            <p>{device.type}</p>
+            <p>Status: {device.status}</p>
+
+            {(device.status === "On" ||
+              device.status === "Off" ||
+              device.status === "Locked" ||
+              device.status === "Unlocked") && (
+              <button onClick={() => toggleDevice(device)}>
+                {device.status === "On" ||
+                device.status === "Locked"
+                  ? "Turn Off / Unlock"
+                  : "Turn On / Lock"}
+              </button>
+            )}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
 }
+
+export default Dashboard;
